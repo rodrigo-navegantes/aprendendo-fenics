@@ -4,12 +4,12 @@ from dolfin import *
 # CARREGAR MALHA DO AEROFÓLIO
 # -----------------------------
 mesh = Mesh()
-with XDMFFile("/home/rodrigo/Documents/IC/FEniCS/Airfoil/malha/airfoil.xdmf") as infile:
+with XDMFFile("/home/rodrigo/Documents/IC/FEniCS/Airfoil/airfoil.xdmf") as infile:
     infile.read(mesh)
 
 # Carregar marcadores de fronteira (Physical Curves)
 mvc = MeshValueCollection("size_t", mesh, 1)
-with XDMFFile("/home/rodrigo/Documents/IC/FEniCS/Airfoil/malha/airfoil.xdmf") as infile:
+with XDMFFile("/home/rodrigo/Documents/IC/FEniCS/Airfoil/airfoil.xdmf") as infile:
     infile.read(mvc, "Aerofolio")  # "Aerofolio" é o nome do Physical Curve
 boundaries = MeshFunction("size_t", mesh, mvc)
 
