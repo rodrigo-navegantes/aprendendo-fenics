@@ -1,8 +1,8 @@
 from fenics import *
 
 # Criação da malha e espaço de funções
-mesh = UnitSquareMesh(32, 32)
-V = FunctionSpace(mesh, "P", 1)  # Funções de Lagrange
+mesh = UnitSquareMesh(32, 32) #esta opção cria sempre triângulos
+V = FunctionSpace(mesh, "Lagrange", 1)  # Funções de Lagrange
 
 # Definir condição de contorno (u = 0 na fronteira)
 u_D = Constant(0.0)
@@ -17,7 +17,7 @@ u = TrialFunction(V)
 v = TestFunction(V)
 f = Expression(
     "10*exp(-5*((x[0]-0.5)*(x[0]-0.5) + (x[1]-0.5)*(x[1]-0.5)))",
-    degree=2
+    degree=5
 )  # Função gaussiana centrada em (0,5 0,5) com pico em 10
 
 L = f * v * dx
@@ -28,5 +28,5 @@ u_sol = Function(V)
 solve(a == L, u_sol, bc)
 
 # Salvar em formato .pvd (para abrir no ParaView)
-vtkfile = File("Poisson/output/solution.pvd")
+vtkfile = File("output/solution.pvd")
 vtkfile << u_sol
